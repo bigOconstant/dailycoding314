@@ -27,12 +27,11 @@ int main() {
 
   vector<int> listeners = {1,5,11,20};
   vector<int> towers = {4,8,15};
-
+  
   vector<pair<int,char>> minRangeList;
 
  int left = std::numeric_limits<int>::max();
   int right = std::numeric_limits<int>::max();
-  bool isleft = true;
   int minRange = std::numeric_limits<int>::min();
   
   for(auto it = listeners.begin(); it < listeners.end(); ++it) {
