@@ -47,7 +47,7 @@ int main() {
 	return a.first < b.first;
       });
 
-  for(int i = 0; i < minRangeList.size(); ++i){
+  for(unsigned int i = 0; i < minRangeList.size(); ++i){
     if(minRangeList[i].second == 'l'){//We have a listener, lets calculate it's min distance to a tower
       for(int j  = i-1; j >0; --j){
 	if(minRangeList[j].second == 't'){
@@ -57,7 +57,7 @@ int main() {
 	}
       }
 
-      for(int j = i+1; j < minRangeList.size(); ++j){
+      for(unsigned int j = i+1; j < minRangeList.size(); ++j){
 	if(left == 5){
 	  cout<<"five still here"<<endl;
 	}
