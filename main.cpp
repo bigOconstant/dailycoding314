@@ -9,7 +9,7 @@ using namespace std;
 /*
   Algorithm works like this:
   
-  First place the listeners and towers in a sorted list. Identifiable by a char telling wether it is a Listener or a tower.
+  First place the listeners and towers in a sorted list.We assume listeners and towers are presorted. We use a merge similar to that in merge sort to combine them into one sorted array Identifiable by a char telling whether it is a Listener or a tower.
 
   <1-------4---------5----------8-----------11-------15----------20-->
    l       t         l          t           l        t            l
@@ -20,6 +20,35 @@ using namespace std;
 
  */
 
+auto mergeArrays(const std::vector<int> &l, const std::vector<int> &t) ->std::vector<pair<int,char>> {
+  std::vector<pair<int,char>> merged;
+
+    auto itl = l.begin();
+    auto itt = t.begin();
+
+    while(itl < l.end() && itt < t.end()){
+      if((*itl) <= (*itt)){
+	merged.push_back({(*itl),'l'});
+	++itl;
+      }else{
+	merged.push_back({(*itt),'t'});
+	++itt;
+      }
+      
+    }
+    
+    while(itl < l.end()){
+      merged.push_back({(*itl),'l'});
+      ++itl;
+    }
+    while(itt < t.end()){
+      merged.push_back({(*itt),'t'});
+      ++itt;
+    }
+    return merged;
+  
+}
+
 
 int main() {
 
@@ -27,26 +56,15 @@ int main() {
 
   vector<int> listeners = {1,5,11,20};
   vector<int> towers = {4,8,15};
-  
-  vector<pair<int,char>> minRangeList;
 
- int left = std::numeric_limits<int>::max();
+  // Assumes listeners and towers are pre sorted. need to run a sort on each if they are not.
+  vector<pair<int,char>> minRangeList = mergeArrays(listeners,towers);
+
+  int left = std::numeric_limits<int>::max();
   int right = std::numeric_limits<int>::max();
   int minRange = std::numeric_limits<int>::min();
-  
-  for(auto it = listeners.begin(); it < listeners.end(); ++it) {
-    minRangeList.push_back({(*it),'l'});
-  }
 
-  for(auto it = towers.begin(); it < towers.end(); ++it){
-    minRangeList.push_back({(*it),'t'});
-  }
-
-  
-  sort(minRangeList.begin(),minRangeList.end(),[]( const pair<int,char> &a,const  pair<int,char> &b){
-	return a.first < b.first;
-      });
-
+ 
   for(unsigned int i = 0; i < minRangeList.size(); ++i){
     if(minRangeList[i].second == 'l'){//We have a listener, lets calculate it's min distance to a tower
       for(int j  = i-1; j >0; --j){
